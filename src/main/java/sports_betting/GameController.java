@@ -5,13 +5,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/games")
-public class gameController {
-    private final List<String> games = List.of("Eagles vs Chiefs", "Lakers vs Celtics");
+public class GameController {
+
+    private final GameRepository repo;
+
+    public GameController(GameRepository repo) {
+        this.repo = repo;
+    }
 
     @GetMapping
-    public List<String> getAllGames() 
-    {
-        return games;
+    public List<Game> getAllGames() {
+        return repo.findAll();
     }
 
     @GetMapping("/ping")
