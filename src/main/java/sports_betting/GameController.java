@@ -22,4 +22,7 @@ public class GameController {
     public String ping() {
         return "Server is running!";
     }
+    // im now able to get this work through and http link instead of locally 
+    // 
+    // heroku ps:scale web=1 --app sports-betting
 }
