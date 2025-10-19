@@ -20,3 +20,4 @@ public class NBATeamController {
         return teamRepository.findByNbaFranchiseTrue();
     }
 }
+// redploying the application
