@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(
     name = "favorite",
-    uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "team_id"})
+    uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "nba_team_id"})
 )
 public class Favorite {
 
@@ -18,8 +18,8 @@ public class Favorite {
     private AppUser user;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "team_id")
-    private Team team;
+    @JoinColumn(name = "nba_team_id")
+    private NBATeam team;
 
     public Long getId() {
         return id;
@@ -35,9 +35,11 @@ public class Favorite {
         this.user = user; 
     }
 
-    public Team getTeam() {
-        return team; }
-    public void setTeam(Team team) {
+     public NBATeam getTeam() 
+     { 
+        return team; 
+     }
+     public void setTeam(NBATeam team) {
         this.team = team; 
     }
 }

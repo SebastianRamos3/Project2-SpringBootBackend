@@ -9,41 +9,36 @@ public class FavoriteService {
 
     private final FavoriteRepository favRepo;
     private final AppUserRepository userRepo;
-    private final TeamRepository teamRepo;
+    private final NBATeamRepo nbaRepo;
 
-    public FavoriteService(FavoriteRepository favRepo, AppUserRepository userRepo, TeamRepository teamRepo) {
+    public FavoriteService(FavoriteRepository favRepo, AppUserRepository userRepo, NBATeamRepo nbaRepo) {
         this.favRepo = favRepo;
         this.userRepo = userRepo;
-        this.teamRepo = teamRepo;
+        this.nbaRepo = nbaRepo;
+    }
+
+    public List<NBATeam> listFavorites(Long userId) {
+        return favRepo.findByUserId(userId).stream().map(Favorite::getTeam).toList();
     }
 
     @Transactional
-    public void addFavorite(Long userId, Long teamId) {
-        var user = userRepo.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
-        var team = teamRepo.findById(teamId).orElseThrow(() -> new IllegalArgumentException("Team not found"));
+    public void addFavorite(Long userId, Long nbaTeamId) {
+        var user = userRepo.findById(userId).orElseThrow();
+        var team = nbaRepo.findById(nbaTeamId).orElseThrow();
+        var exists = favRepo.findByUserIdAndTeam_Id(userId, nbaTeamId).isPresent();
+        if (exists){
+            return;
+        }
 
-        //This will prevent duplicates
-        favRepo.findByUserIdAndTeamId(userId, teamId).ifPresent(f -> {
-            throw new IllegalStateException("Already in favorites");
-        });
-
-        Favorite fav = new Favorite();
+        var fav = new Favorite();
         fav.setUser(user);
         fav.setTeam(team);
         favRepo.save(fav);
     }
 
     @Transactional
-    public void removeFavorite(Long userId, Long teamId) {
-        var fav = favRepo.findByUserIdAndTeamId(userId, teamId)
-                         .orElseThrow(() -> new IllegalArgumentException("Favorite not found"));
+    public void removeFavorite(Long userId, Long nbaTeamId) {
+        var fav = favRepo.findByUserIdAndTeam_Id(userId, nbaTeamId).orElseThrow(() -> new IllegalArgumentException("Favorite not found"));
         favRepo.delete(fav);
     }
-
-    public List<Team> listFavorites(Long userId) {
-        return favRepo.findByUserId(userId).stream()
-                      .map(Favorite::getTeam)
-                      .toList();
-    }
-
 }
