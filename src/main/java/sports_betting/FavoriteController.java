@@ -13,25 +13,25 @@ public class FavoriteController {
         this.service = service;
     }
 
-    //Get
+    // Get
     @GetMapping
     public List<NBATeam> list(@PathVariable Long userId) {
         return service.listFavorites(userId);
     }
 
-    //Post
+    // Post
     @PostMapping
     public ResponseEntity<?> add(@PathVariable Long userId, @RequestParam Long teamId) {
         service.addFavorite(userId, teamId);
         return ResponseEntity.status(201).build();
     }
 
-    //Delete
+    // Delete
     @DeleteMapping("/{teamId}")
     public ResponseEntity<?> remove(@PathVariable Long userId, @PathVariable Long teamId) {
         service.removeFavorite(userId, teamId);
         return ResponseEntity.noContent().build();
     }
 
-    //still need something for PUT
+    // still need something for PUT
 }
