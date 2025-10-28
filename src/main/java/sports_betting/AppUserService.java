@@ -25,7 +25,7 @@ public class AppUserService {
             throw new IllegalArgumentException("Email cannot be empty");
         }
 
-        Optional<AppUser> existingUser = userRepo.findByUsername(username.trim());
+        Optional<AppUser> existingUser = userRepo.findByUsernameIgnoreCase(username.trim());
         if (existingUser.isPresent()) {
             throw new IllegalArgumentException("Username already exists");
         }
@@ -53,7 +53,7 @@ public class AppUserService {
             throw new IllegalArgumentException("Password cannot be empty");
         }
 
-        Optional<AppUser> user = userRepo.findByUsername(username.trim());
+        Optional<AppUser> user = userRepo.findByUsernameIgnoreCase(username.trim());
         if (user.isEmpty()) {
             throw new IllegalArgumentException("User not found");
         }
