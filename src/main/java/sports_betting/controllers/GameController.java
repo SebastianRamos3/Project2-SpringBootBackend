@@ -1,6 +1,8 @@
-package sports_betting;
+package sports_betting.controllers;
 
 import org.springframework.web.bind.annotation.*;
+import sports_betting.models.Game;
+import sports_betting.repositories.GameRepository;
 import java.util.List;
 
 @RestController
@@ -22,11 +24,11 @@ public class GameController {
     public String ping() {
         return "Server is running!";
     }
-    // im now able to get this work through and http link instead of locally 
-    // steps to make it work. 
+    // im now able to get this work through and http link instead of locally
+    // steps to make it work.
     // 1. make sure its deployed on heroku
-    // 
-    // run v In terminal to have it work on web and pop up data 
+    //
+    // run v In terminal to have it work on web and pop up data
     // heroku ps:scale web=1 --app sports-betting
 
     // can either curl in terminal or paste link into browser

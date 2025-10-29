@@ -1,7 +1,12 @@
-package sports_betting;
+package sports_betting.services;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sports_betting.models.Favorite;
+import sports_betting.models.NBATeam;
+import sports_betting.repositories.AppUserRepository;
+import sports_betting.repositories.FavoriteRepository;
+import sports_betting.repositories.NBATeamRepo;
 import java.util.List;
 
 @Service
@@ -26,7 +31,7 @@ public class FavoriteService {
         var user = userRepo.findById(userId).orElseThrow();
         var team = nbaRepo.findById(nbaTeamId).orElseThrow();
         var exists = favRepo.findByUserIdAndTeam_Id(userId, nbaTeamId).isPresent();
-        if (exists){
+        if (exists) {
             return;
         }
 
@@ -38,7 +43,8 @@ public class FavoriteService {
 
     @Transactional
     public void removeFavorite(Long userId, Long nbaTeamId) {
-        var fav = favRepo.findByUserIdAndTeam_Id(userId, nbaTeamId).orElseThrow(() -> new IllegalArgumentException("Favorite not found"));
+        var fav = favRepo.findByUserIdAndTeam_Id(userId, nbaTeamId)
+                .orElseThrow(() -> new IllegalArgumentException("Favorite not found"));
         favRepo.delete(fav);
     }
 }

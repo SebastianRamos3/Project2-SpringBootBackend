@@ -1,6 +1,7 @@
-package sports_betting;
+package sports_betting.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import sports_betting.models.Favorite;
 import java.util.List;
 import java.util.Optional;
 

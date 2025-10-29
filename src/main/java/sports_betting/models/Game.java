@@ -1,10 +1,10 @@
-package sports_betting;
+package sports_betting.models;
 
 import jakarta.persistence.*;
 import java.time.OffsetDateTime;
 
 @Entity
-public class Game{
+public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -14,40 +14,47 @@ public class Game{
     private Double awayOdds;
     private OffsetDateTime gameTime;
 
-    public Long getId(){
+    public Long getId() {
         return id;
     }
 
-    public String getHomeTeam(){
+    public String getHomeTeam() {
         return homeTeam;
     }
-    public void setHomeTeam(String homeTeam){
+
+    public void setHomeTeam(String homeTeam) {
         this.homeTeam = homeTeam;
     }
 
-    public String getAwayTeam(){
+    public String getAwayTeam() {
         return awayTeam;
     }
-    public void setAwayTeam(String awayTeam){
+
+    public void setAwayTeam(String awayTeam) {
         this.awayTeam = awayTeam;
     }
 
-    public Double getHomeOdds(){
+    public Double getHomeOdds() {
         return homeOdds;
     }
-    public void setHomeOdds(Double homeOdds){
+
+    public void setHomeOdds(Double homeOdds) {
         this.homeOdds = homeOdds;
     }
-    public Double getAwayOdds(){
+
+    public Double getAwayOdds() {
         return awayOdds;
     }
-    public void setAwayOdds(Double awayOdds){
+
+    public void setAwayOdds(Double awayOdds) {
         this.awayOdds = awayOdds;
     }
-    public OffsetDateTime getGameTime(){
+
+    public OffsetDateTime getGameTime() {
         return gameTime;
     }
-    public void setGameTime(OffsetDateTime gameTime){
+
+    public void setGameTime(OffsetDateTime gameTime) {
         this.gameTime = gameTime;
     }
 
