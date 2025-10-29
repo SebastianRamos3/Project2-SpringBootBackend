@@ -1,8 +1,11 @@
-package sports_betting;
+package sports_betting.services;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sports_betting.models.AppUser;
+import sports_betting.repositories.AppUserRepository;
 import java.util.Optional;
+import java.util.List;
 
 @Service
 public class AppUserService {
@@ -39,7 +42,6 @@ public class AppUserService {
         newUser.setUsername(username.trim());
         newUser.setPassword(password.trim());
         newUser.setEmail(email.trim());
-        newUser.setDisplayName(username.trim());
 
         return userRepo.save(newUser);
     }
@@ -67,20 +69,32 @@ public class AppUserService {
     }
 
     @Transactional
-    public void updateDisplayName(Long userId, String newDisplayName) {
-        if (newDisplayName == null || newDisplayName.trim().isEmpty()) {
-            throw new IllegalArgumentException("Display name cannot be empty");
+    public AppUser updateUsername(Long userId, String newUsername) {
+        if (userId == null) {
+            throw new IllegalArgumentException("User ID cannot be null");
+        }
+        if (newUsername == null || newUsername.trim().isEmpty()) {
+            throw new IllegalArgumentException("Username cannot be empty");
         }
 
-        var user = userRepo.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+        Optional<AppUser> user = userRepo.findById(userId);
+        if (user.isEmpty()) {
+            throw new IllegalArgumentException("User not found");
+        }
 
-        var existingUser = userRepo.findByDisplayName(newDisplayName.trim());
+        // Check if the new username is already taken by another user
+        Optional<AppUser> existingUser = userRepo.findByUsernameIgnoreCase(newUsername.trim());
         if (existingUser.isPresent() && !existingUser.get().getId().equals(userId)) {
-            throw new IllegalArgumentException("Display name is already taken");
+            throw new IllegalArgumentException("Username already exists");
         }
 
-        user.setDisplayName(newDisplayName.trim());
-        userRepo.save(user);
+        AppUser foundUser = user.get();
+        foundUser.setUsername(newUsername.trim());
+
+        return userRepo.save(foundUser);
+    }
+
+    public List<AppUser> getAllUsers() {
+        return userRepo.findAll();
     }
 }

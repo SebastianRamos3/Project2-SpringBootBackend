@@ -1,4 +1,4 @@
-package sports_betting;
+package sports_betting.models;
 
 import jakarta.persistence.*;
 
@@ -8,9 +8,6 @@ public class AppUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false)
-    private String displayName;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -27,14 +24,6 @@ public class AppUser {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
     }
 
     public String getEmail() {

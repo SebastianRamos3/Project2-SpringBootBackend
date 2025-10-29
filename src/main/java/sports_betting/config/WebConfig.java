@@ -1,4 +1,4 @@
-package sports_betting;
+package sports_betting.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

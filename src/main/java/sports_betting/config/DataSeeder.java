@@ -1,8 +1,10 @@
-package sports_betting;
+package sports_betting.config;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import sports_betting.models.Game;
+import sports_betting.repositories.GameRepository;
 import java.time.OffsetDateTime;
 
 @Configuration
@@ -10,7 +12,7 @@ public class DataSeeder {
     @Bean
     CommandLineRunner seedData(GameRepository repository) {
         return args -> {
-            if (repository.count() > 0){
+            if (repository.count() > 0) {
                 return;
             }
             Game game1 = new Game();

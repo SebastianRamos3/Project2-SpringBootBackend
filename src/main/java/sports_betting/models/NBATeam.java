@@ -1,4 +1,4 @@
-package sports_betting;
+package sports_betting.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

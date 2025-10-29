@@ -1,8 +1,11 @@
-package sports_betting;
+package sports_betting.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sports_betting.models.AppUser;
+import sports_betting.services.AppUserService;
 import java.util.Map;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
@@ -26,8 +29,7 @@ public class AppUserController {
             return ResponseEntity.ok(Map.of(
                     "message", "User created successfully",
                     "userId", newUser.getId(),
-                    "username", newUser.getUsername(),
-                    "displayName", newUser.getDisplayName()));
+                    "username", newUser.getUsername()));
 
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest()
@@ -46,8 +48,7 @@ public class AppUserController {
             return ResponseEntity.ok(Map.of(
                     "message", "Login successful",
                     "userId", user.getId(),
-                    "username", user.getUsername(),
-                    "displayName", user.getDisplayName()));
+                    "username", user.getUsername()));
 
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest()
@@ -55,20 +56,29 @@ public class AppUserController {
         }
     }
 
-    @PutMapping("/{userId}/display-name")
-    public ResponseEntity<Map<String, String>> updateDisplayName(
+    @PutMapping("/{userId}/username")
+    public ResponseEntity<Map<String, Object>> updateUsername(
             @PathVariable Long userId,
             @RequestBody Map<String, String> request) {
-
         try {
-            String newDisplayName = request.get("displayName");
-            userService.updateDisplayName(userId, newDisplayName);
+            String newUsername = request.get("username");
 
-            return ResponseEntity.ok(Map.of("message", "Display name updated successfully"));
+            AppUser updatedUser = userService.updateUsername(userId, newUsername);
+
+            return ResponseEntity.ok(Map.of(
+                    "message", "Username updated successfully",
+                    "userId", updatedUser.getId(),
+                    "username", updatedUser.getUsername()));
 
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest()
                     .body(Map.of("error", e.getMessage()));
         }
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<AppUser>> getAllUsers() {
+        List<AppUser> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
     }
 }

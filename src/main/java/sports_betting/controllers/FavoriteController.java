@@ -1,7 +1,9 @@
-package sports_betting;
+package sports_betting.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sports_betting.models.NBATeam;
+import sports_betting.services.FavoriteService;
 import java.util.List;
 
 @RestController
